@@ -34,35 +34,31 @@ RUN apt-get -y --no-install-recommends install \
     libgif-dev \
     libgstreamer-plugins-base1.0-dev \
     libgstrtspserver-1.0-dev
-
 # required stuff
-RUN apt-get install -y mesa-common-dev
+RUN apt-get install -y mesa-common-dev libgl1-mesa-glx
 
-# get source files
 RUN cd ~/
-RUN wget https://people.freedesktop.org/~cbrill/libtxc_dxtn/libtxc_dxtn-1.0.1.tar.gz --no-check-certificate 
-RUN tar xvfz libtxc_dxtn-1.0.1.tar.gz
-RUN cd libtxc_dxtn-1.0.1 \
 
+RUN wget https://people.freedesktop.org/~cbrill/libtxc_dxtn/libtxc_dxtn-1.0.1.tar.gz --no-check-certificate 
+
+RUN tar xvfz libtxc_dxtn-1.0.1.tar.gz
+
+RUN cd libtxc_dxtn-1.0.1 \ 
 # start the job
     ./configure \
     make \
     make install \
-
 # clean up sources (optional)
     cd .. \
     -rf libtxc_dxtn-1.0.1 libtxc_dxtn-1.0.1.tar.gz
 
 # https://community.nxp.com/thread/525440 
 ENV XDG_RUNTIME_DIR=/run/user/0/     
-    
+
 # https://askubuntu.com/questions/834254/steam-libgl-error-no-matching-fbconfigs-or-visuals-found-libgl-error-failed-t
 
 RUN rm -f /usr/lib/x86_64-linux-gnu/libGL.so \
     rm -f /usr/lib/x86_64-linux-gnu/libGL.so.1
-
-# gst-launch-1.0 videotestsrc ! autovideosink OK!!
-# gst-launch-1.0 -v playbin uri=rtsp://user:password@ip/h.264 OK!!
 
 # http://alax.info/blog/343 Interactive RTSP Client
 

@@ -12,7 +12,10 @@ docker run -it --rm -e DISPLAY=host.docker.internal:0 -v /tmp/.X11-unix/:/tmp/.X
 
 ## Run client
 
+gst-launch-1.0 videotestsrc ! autovideosink
+
 gst-launch-1.0 -v playbin uri=rtsp://user:name@ip/some
+
 
 
 
